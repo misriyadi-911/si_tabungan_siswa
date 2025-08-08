@@ -1,0 +1,72 @@
+<table id="data_table" class="table data_table">
+    
+    <thead class="bg-primary text-white">
+        <tr>
+            <th scope="col" width="65px">No</th>
+            <th scope="col">Nama</th>
+            <th scope="col">Kelas</th>
+            <th scope="col">Debit</th>
+            <th scope="col">Kredit</th>
+            <th scope="col">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+    		    			<tr>
+    				<td scope="row">1</td>
+    				<td>
+                       Misriyadi
+    					
+    				</td>
+    				<td>
+    					X                  					
+    				</td>
+                    <td>
+                        @currency($item->total_debit)
+                    </td>
+                    <td>
+                        @currency($item->total_kredit)
+                    </td>
+                    <td>
+                        @currency($item->total_debit - $item->total_kredit)
+                    </td>
+    			</tr>
+    		    			<tr>
+    				<td scope="row">2</td>
+    				<td>
+                       Nur
+    					
+    				</td>
+    				<td>
+    					X                  					
+    				</td>
+                    <td>
+                        @currency($item->total_debit)
+                    </td>
+                    <td>
+                        @currency($item->total_kredit)
+                    </td>
+                    <td>
+                        @currency($item->total_debit - $item->total_kredit)
+                    </td>
+    			</tr>
+    		    			<tr>
+    				<td scope="row">3</td>
+    				<td>
+                       Dimas MR
+    					
+    				</td>
+    				<td>
+    					X                  					
+    				</td>
+                    <td>
+                        @currency($item->total_debit)
+                    </td>
+                    <td>
+                        @currency($item->total_kredit)
+                    </td>
+                    <td>
+                        @currency($item->total_debit - $item->total_kredit)
+                    </td>
+    			</tr>
+    		    </tbody>
+</table>
