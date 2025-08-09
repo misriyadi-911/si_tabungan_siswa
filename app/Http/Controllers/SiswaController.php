@@ -304,6 +304,7 @@ class SiswaController extends Controller
     {
         
         $id_user = auth()->user()->id_user;
+        
 
         // $dt_tabungan_debit = Tabungan::where('id_siswa', '=', $id_user)
         //                         ->where('jenis_transaksi', '=', 'Debit')
@@ -396,6 +397,8 @@ class SiswaController extends Controller
                     ->where('id_siswa', $id_user)
                     ->get();
         $total_pinjaman = Pinjaman::where('id_siswa', $id_user)->sum('nominal_pinjaman');
+        $total_cicilan = Tabungan::where('id_siswa', $id_user)->where('keterangan', '=', 'cicilan')->sum('nominal_kredit'); 
+        $sisa_pinjaman = $total_pinjaman - $total_cicilan;
         $nominal_chart_debit = [];
         $nominal_chart_kredit = [];
         $kredit = [];
@@ -437,7 +440,7 @@ class SiswaController extends Controller
             return "Rp. <?php echo number_format($expression, 0, ',', '.'); ?>";
         });
 
-        return view('siswa.dashboard', compact('total_th', 'total_bln', 'total_hr', 'tgl_chart_debit', 'tgl_chart_kredit', 'nominal_chart_debit', 'nominal_chart_kredit', 'total_pinjaman'));
+        return view('siswa.dashboard', compact('total_th', 'total_bln', 'total_hr', 'tgl_chart_debit', 'tgl_chart_kredit', 'nominal_chart_debit', 'nominal_chart_kredit', 'total_pinjaman', 'total_cicilan', 'sisa_pinjaman', 'sisa_pinjaman','total_cicilan'));
     }
 
     public function rincian_tabungan ()
@@ -525,7 +528,7 @@ class SiswaController extends Controller
             $nominal_debit [] = $dt_tb->nominal_debit;
         }
 
-        $total_debit = array_sum($nominal_debit);
+        $total_debit = array_sum($nominal_debit);;
 
         if($request->nominal > $total_debit)
         {

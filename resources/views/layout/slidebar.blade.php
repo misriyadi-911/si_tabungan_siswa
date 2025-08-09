@@ -8,26 +8,26 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        @if(auth()->user()->level == 'admin')
+                        @if(auth()->check() && auth()->user()->level == 'admin')
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{url('/beranda')}}"
                                 aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                                     class="hide-menu">Dashboard</span></a>
                         </li>
                         @endif
-                        @if(auth()->user()->level == 'siswa')
+                        @if(auth()->check() && auth()->user()->level == 'siswa')
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{url('/siswa/dashboard')}}"
                                 aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                                     class="hide-menu">Dashboard</span></a>
                         </li>
                         @endif
-                        @if(auth()->user()->level == 'orang tua')
+                        @if(auth()->check() && auth()->user()->level == 'orang tua')
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{url('/orang_tua/dashboard')}}"
                                 aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                                     class="hide-menu">Dashboard</span></a>
                         </li>
                         @endif
                         
-                         @if(auth()->user()->level == 'siswa')
+                         @if(auth()->check() && auth()->user()->level == 'siswa')
                          <li class="list-divider"></li>
                          <li class="nav-small-cap"><span class="hide-menu">Data Saldo</span></li>
                          <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
@@ -44,8 +44,8 @@
                         </li>
                         @endif
                         
-                        @if(auth()->user()->level == 'siswa')
-                        <li class="list-divider"></li>
+                        @if(auth()->check() && auth()->user()->level == 'siswa')
+                        {{-- <li class="list-divider"></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
                                 aria-expanded="false"><i class="icon-wallet"></i><span
                                     class="hide-menu">Pinjaman
@@ -57,19 +57,19 @@
                                 <li class="sidebar-item"><a href="{{url('/siswa/cicilan')}}" class="sidebar-link"><span
                                             class="hide-menu"> Bayar Cicilan </span></a></li>
                             </ul>
-                        </li>
-                        {{-- <li class="list-divider"></li>
+                        </li> --}}
+                        <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">Pembayaran</span></li>
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{url('/siswa/pembayaran')}}"
                                 aria-expanded="false">
                                 <i class="icon-basket"></i>
-                                <span class="hide-menu">Pembayaran</span>
+                                <span class="hide-menu">Bayar Cicilan</span>
                             </a>
-                        </li> --}}
+                        </li>
                         @endif
 
                         
-                        @if(auth()->user()->level == 'orang tua')
+                        @if(auth()->check() && auth()->user()->level == 'orang tua')
                         <li class="list-divider"></li>
                          <li class="nav-small-cap"><span class="hide-menu">Data Saldo</span></li>
                          
@@ -88,7 +88,7 @@
                         @endif
 
                         
-                        @if(auth()->user()->level == 'admin')
+                        @if(auth()->check() && auth()->user()->level == 'admin')
                         <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">Data Pengguna</span></li>
                         
@@ -99,7 +99,7 @@
                             <ul aria-expanded="false" class="collapse first-level base-level-line">
                                 @foreach ($data_kelas as $kelas)
                                 <li class="sidebar-item">
-                                    <a href="{{ url('/siswa/'. $kelas->id_kelas) }}" class="sidebar-link">
+                                    <a href="{{ url('/siswa/'. $kelas->id_kelas) }}/kelas" class="sidebar-link">
                                         <span class="hide-menu"> {{ $kelas->kelas }} </span>
                                     </a>
                                 </li>
@@ -170,9 +170,15 @@
                                 @endforeach
                             </ul>
                         </li>
+
+                        <li class="nav-small-cap"><span class="hide-menu">Data Pinjaman</span></li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{url('/pinjaman')}}"
+                                aria-expanded="false"><i class="icon-credit-card"></i><span
+                                    class="hide-menu">Pinjaman</span></a>
+                        </li>
                         @endif
                         
-                        @if(auth()->user()->level == 'admin')
+                        @if(auth()->check() && auth()->user()->level == 'admin')
                         {{-- <li class="list-divider"></li>
 
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{url('/sms')}}"><i class="icon-bubble"></i><span
@@ -180,12 +186,12 @@
                         </li> --}}
                         @endif
                         <li class="list-divider"></li>
-                        @if(auth()->user()->level == 'admin')
+                        @if(auth()->check() && auth()->user()->level == 'admin')
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="/logout/admin"
                                 aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i><span
                                     class="hide-menu">Logout</span></a></li>
                         @endif
-                        @if(auth()->user()->level == 'siswa' || auth()->user()->level == 'orang tua')
+                        @if(auth()->check() && auth()->user()->level == 'siswa' || auth()->user()->level == 'orang tua')
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="/logout"
                                 aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i><span
                                     class="hide-menu">Logout</span></a></li>

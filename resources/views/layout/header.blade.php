@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('Template')}}/assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img')}}/icon_bulat.png">
     <title>@yield('title')</title>
     <!-- Custom CSS -->
     <link href="{{asset('Template')}}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">

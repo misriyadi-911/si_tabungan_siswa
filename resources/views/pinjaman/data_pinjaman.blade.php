@@ -14,11 +14,11 @@ Data Pinjaman
 @endsection
 
 @section('user')
-	{{auth()->user()->siswa->nama_siswa}}
+	{{auth()->user()->admin->nama_admin}}
 @endsection 
 
 @section('foto_user')
-	{{asset('img')}}/{{auth()->user()->siswa->foto_siswa}}
+	{{asset('img')}}/{{auth()->user()->admin->foto_admin}}
 @endsection
 
 @section('content')
@@ -26,7 +26,7 @@ Data Pinjaman
 <!-- Start Page Content -->
 <!-- ============================================================== -->
 
-<div class="row">
+{{-- <div class="row">
     <div class="col-12">
     <div class="card text-white">
         <div class="card-header bg-dark">
@@ -38,13 +38,13 @@ Data Pinjaman
         </div>
     </div>
     </div>
-</div>
+</div> --}}
 
 <!-- basic table -->
 <div class="row">
 	<div class="col-12">
-		<a href="" class="btn btn-primary btn-sm rounded-pill mb-3 btn_tambah" data-toggle="modal" data-target="#modalPinjam">
-			<i class="fas fa-plus-circle"></i> Pinjam Uang
+		<a href="/pinjaman/pilih_siswa" class="btn btn-primary btn-sm rounded-pill mb-3 btn_tambah" data-toggle="" data-target="">
+			<i class="fas fa-plus-circle"></i> Tambah Data Pinjaman
 		</a>
 		<div class="card">
 			<div class="card-body">
@@ -55,18 +55,22 @@ Data Pinjaman
 								<th scope="col">No</th>
 								<th scope="col">NIS</th>
 								<th scope="col">Nama</th>
-								<th scope="col">Tanggal Pinjam</th>
-								<th scope="col">Nominal Pinjam</th>
+								<th scope="col">Total Pinjaman</th>
+								<th scope="col">Total Cicilan</th>
+								<th scope="col">Sisa Pinjaman</th>
+								<th scope="col">Hibah</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($data_pinjaman as $item)
+							@foreach ($data_rekap as $item)
 							<tr>
 								<td scope="row">{{$loop->iteration}}</td>
 								<td>{{$item->siswa->nis}}</td>
 								<td>{{$item->siswa->nama_siswa}}</td>
-								<td>{{$item->tgl_pinjam}}</td>
-								<td>{{$item->nominal_pinjaman}}</td>
+								<td>@currency($item->total_pinjaman)</td>
+								<td>@currency($data_cicilan[$item->id_siswa]->total_cicilan ?? 0)</td>
+								<td>@currency($item->sisa_pinjaman)</td>
+								<td>@currency($item->total_hibah)</td>
 							</tr>
 							@endforeach
 						</tbody>
@@ -79,63 +83,39 @@ Data Pinjaman
 
 
 <!-- Start modal tambah -->
-<div class="modal fade" id="modalPinjam" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Data Pinjaman</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="{{ url('/siswa/proses_pinjam') }}" method="POST" enctype="multipart/form-data">
-      <div class="modal-body">
-         @csrf
-          <input type="hidden" name="id_siswa" value="{{auth()->user()->id_user}}">
-          <input type="hidden" name="id_tapel" value="{{$data_tapel[0]->id_tapel}}">
-                    <div class="row">
-                        <div class="col-md-12 col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-start">
-                                        <h3 class="card-title mb-0">Masukkan Data Pinjaman</h3>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-md-12">
-											<div class="form-group">
-                                                <h5 id="tgl_pinjam">Tanggal Pinjam</h5>
-												{{-- <input type="hidden" name="id_tapel" class="form-control mb-3" width="30%" value="{{$data_tapel[0]->id_tapel}}"> --}}
-												{{-- <input type="hidden" name="id_siswa" class="form-control mb-3" width="30%" value="{{auth()->user()->siswa->id_siswa}}"> --}}
-                                                <input name="tgl_pinjam" type="date" class="form-control" id="tgl_pinjam">
-                                            </div>
-                                            <div class="form-group">
-                                                <h5 id="nominal_pinjaman">Nominal Pinjaman</h5>
-                                                <input name="nominal_pinjaman" type="number" class="form-control" id="nominal_pinjaman">
-                                            </div>
-                                        </div>
-                                    </div>                                  
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-tutup" data-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary" value="Simpan">
-
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
+{{--  --}}
 <!-- End modal tambah -->
 	@endsection
 
-	@section('script')
-	<script>
+@section('script')
+<script>
+$(document).ready(function() {
+    // DataTable untuk tabel utama
+    if (!$.fn.DataTable.isDataTable('#data_table')) {
+        $('#data_table').DataTable({
+            responsive: true,
+            language: {
+                search: "Cari:",
+                lengthMenu: "Tampilkan _MENU_ entri",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri"
+            }
+        });
+    }
+
+    $('#modalPinjam').on('shown.bs.modal', function () {
+        if (!$.fn.DataTable.isDataTable('#data_table_modal')) {
+            $('#data_table_modal').DataTable({
+                responsive: true,
+                language: {
+                    search: "Cari:",
+                    lengthMenu: "Tampilkan _MENU_ entri",
+                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri"
+                }
+            });
+        }
+    });
+
+    // Ajax Form Submission
     $(document).on('submit', 'form', function(event) {
         event.preventDefault();
         $.ajax({
@@ -146,37 +126,38 @@ Data Pinjaman
             processData:false,
             contentType:false,
             success : function(res) {
-                console.log(res);
                 window.location.href = "{{ url('/siswa/pinjaman') }}"
                 const Toast = Swal.mixin({
-                            toast : true,
-                            position : 'top-end',
-                            showConfirmButton : false,
-                            timer : 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-                        Toast.fire({
-                            icon : 'success',
-                            title : res.text
-                        })
-                },
-                error : function (xhr) {
-                    // toastr.error(res.responseJSON.text, 'Gagal');
-                    Swal.fire({
-                      position: 'top-end',
-                      icon: 'error',
-                      title: xhr.responseJSON.text,
-                      showConfirmButton: false,
-                      timer: 1500
-                    })
-                } 
-        })
-     });        
+                    toast : true,
+                    position : 'top-end',
+                    showConfirmButton : false,
+                    timer : 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+                Toast.fire({
+                    icon : 'success',
+                    title : res.text
+                });
+            },
+            error : function (xhr) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: xhr.responseJSON.text,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            } 
+        });
+    });
+});
+     
+     
 </script>
-	@endsection
+@endsection
 
 

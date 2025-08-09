@@ -16,7 +16,7 @@
       <img  src="{{asset('img')}}/itachi.jpg" alt="">
     </div>
     <div class="login-container">
-      <form action="{{url('/postlogin')}}" method="POST">
+      <form action="{{url('/postLogin')}}" method="POST">
         @csrf
         <img class="avatar" src="{{asset('img')}}/itachi.jpg" alt="">
         <h2>Welcome</h2>

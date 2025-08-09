@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{{asset('bootstrap')}}/style.css">
   <link rel="stylesheet" href="https://fonts.googl.com/css?family?=Poppins:600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{asset('font')}}/css/all.min.css">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img')}}/logo_dashboard.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img')}}/icon_bulat.png">
   <!-- <title>Form Login</title> -->
 </head>
 <body>
@@ -18,7 +18,7 @@
       <img  src="{{asset('img')}}/img/bg.svg" alt="">
     </div>
     <div class="login-container">
-      <form action="{{url('/postlogin_siswa')}}" method="POST">
+      <form action="{{url('/postLogin')}}" method="POST">
         @csrf
         <img class="avatar" src="{{asset('img')}}/img/avatar.svg" alt="">
         <h2>Form Login</h2>

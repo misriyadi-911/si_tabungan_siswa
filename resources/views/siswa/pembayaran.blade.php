@@ -218,7 +218,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="{{ url('/siswa/proses_bayar') }}" method="POST" enctype="multipart/form-data">
+      <form action="{{ url('/siswa/proses_cicilan') }}" method="POST" enctype="multipart/form-data">
       <div class="modal-body">
          @csrf
           <input type="hidden" name="id_siswa" value="{{auth()->user()->id_user}}">
@@ -235,12 +235,12 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="jenis_pembayaran">Jenis Pembayaran</label>
-                                                <input type="hidden" name="jenis_pembayaran" class="hiddenForm  form-control" value="Denda">
-                                                <input type="text" class="hiddenForm  form-control" value="Denda" disabled="">
+                                                <input type="hidden" name="jenis_pembayaran" class="hiddenForm  form-control" value="cicilan">
+                                                <input type="text" class="hiddenForm  form-control" value="cicilan" disabled="">
                                             </div>
                                             <div class="form-group">
                                                 <h5 id="nominal">Nominal</h5>
-                                                <input name="nominal" type="number" class="form-control" id="nominal">
+                                                <input name="nominal_kredit" type="number" class="form-control" id="nominal_kredit">
                                             </div>
                                         </div>
                                     </div>                                  
@@ -272,7 +272,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="{{ url('/siswa/proses_bayar') }}" method="POST" enctype="multipart/form-data">
+      <form action="{{ url('/siswa/proses_cicilan') }}" method="POST" enctype="multipart/form-data">
       <div class="modal-body">
          @csrf
           <input type="hidden" name="id_siswa" value="{{auth()->user()->id_user}}">
@@ -330,7 +330,7 @@
             contentType:false,
             success : function(res) {
                 console.log(res);
-                window.location.href = "{{ url('/siswa/pembayaran') }}"
+                window.location.href = "{{ url('/siswa/dashboard') }}"
                 const Toast = Swal.mixin({
                             toast : true,
                             position : 'top-end',

@@ -5,12 +5,12 @@
 @endsection
 
 @section('title_halaman')
-  Data Tabungan
+  Data Rincian Tabungan
 @endsection
 
 
 @section('link_halaman')
-  <a href="{{ url('/beranda') }}">Dashboard </a> >> <a href="{{ url('/tabungan/tambah') }}"> Tabungan</a>
+  <a href="{{ url('/beranda') }}">Dashboard </a> >> <a href="{{ url('/tabungan/tambah') }}"> Rincian Tabungan</a>
 @endsection
 
 @section('user')
@@ -39,36 +39,48 @@
                 		
                 	</div>
                 	<div class="row">
-                		<div class="col-sm-12">	                	
+                		<div class="col-sm-12">
+                            <table>
+                				<tr>
+                					<td>NIS</td>
+                					<td> : </td>
+                					<td>{{$data_tabungan[0]->siswa->nis}}</td>
+                				</tr>
+                				<tr>
+                					<td>Nama</td>
+                					<td> : </td>
+                					<td>{{$data_tabungan[0]->siswa->nama_siswa}}</td>
+                				</tr>
+                				<tr>
+                					<td>Kelas</td>
+                					<td> : </td>
+                					<td>{{$data_tabungan[0]->siswa->kelas->kelas}}</td>
+                				</tr>
+                			</table>
+                			<hr class="mb-4">	                	
 		                    <table id="data_table" class="table data_table">
 		                        <thead class="bg-primary text-white">
 		                            <tr>
 		                                <th scope="col" width="65px">No</th>
-		                                <th scope="col" width="165px">NIS</th>
-		                                <th scope="col">Nama</th>
-		                                <th scope="col">Kelas</th>
-		                                <th scope="col">Aksi</th>
+		                                <th scope="col">Tanggal Transaksi</th>
+		                                <th scope="col">Nominal Debit</th>
+		                                <th scope="col">Nominal Kredit</th>
 		                            </tr>
 		                        </thead>
 		                        <tbody>
 									
-		                        		@foreach ($data_tabungan_filter as $item)
+		                        		@foreach ($data_tabungan as $item)
 		                        			<tr>
 		                        				<td width="65px" scope="row">{{$loop->iteration}}</td>
 		                        				<td>
-		                        					{{$item->siswa->nis}}
+		                        					{{date('d-m-Y', strtotime($item->tgl_transaksi))}}
 		                        				</td>
-		                        				<td width="165px">
-		                        					{{$item->siswa->nama_siswa}}
+		                        				<td>
+		                        					{{$item->nominal_debit}}                   					
 		                        				</td>
-		                        				<td width=>
-		                        					{{$item->siswa->kelas->kelas}}
+		                        				<td>
+		                        					{{$item->nominal_kredit}}                   					
 		                        				</td>
-												<td>
-													<a href="/tabungan/rincian/{{ $item->id_siswa }}" class="btn btn-success">
-														<i class="fas fa-eye"></i>
-													</a>
-												</td>
 		                        			</tr>
 		                        		@endforeach
 		                        </tbody>

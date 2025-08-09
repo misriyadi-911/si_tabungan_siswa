@@ -6,6 +6,7 @@ use Illuminate\Support\Carbon;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Blade;
 use App\Models\Kelas;
 
 class AppServiceProvider extends ServiceProvider
@@ -34,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $data_kelas = Kelas::all();
             $view->with('data_kelas', $data_kelas);
+        });
+
+         Blade::directive('currency', function ($expression) {
+            return "<?php echo 'Rp. ' . number_format($expression, 0, ',', '.'); ?>";
         });
     }
 }

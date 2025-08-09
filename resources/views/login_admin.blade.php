@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{{asset('bootstrap')}}/style.css">
   <link rel="stylesheet" href="https://fonts.googl.com/css?family?=Poppins:600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{asset('font')}}/css/all.min.css">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img')}}/logo_dashboard.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img')}}/icon_bulat.png">
   <!-- <title>Form Login</title> -->
 </head>
 <body>

@@ -16,6 +16,7 @@ class cekLevel
      */
     public function handle(Request $request, Closure $next,...$levels)
     {
+       
         if(in_array($request->user()->level,$levels)){
             return $next($request);
         }

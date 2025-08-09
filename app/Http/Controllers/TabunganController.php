@@ -35,6 +35,13 @@ class TabunganController extends Controller
                                 ->get();
         return view('tabungan.index', compact('data_tabungan_filter'));
     }
+
+    public function rincian_transaksi ($id_siswa)
+    {
+
+        $data_tabungan = Tabungan::where('id_siswa', $id_siswa)->get();
+        return view('tabungan.rincian_transaksi', compact('data_tabungan'));
+    }   
     /**
      * Show the form for creating a new resource.
      *

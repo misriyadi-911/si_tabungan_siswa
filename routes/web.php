@@ -13,7 +13,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\PinjamanController;
-
+use App\Models\Tabungan;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,8 +34,7 @@ use App\Http\Controllers\PinjamanController;
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/login/admin', [LoginController::class, 'form_admin'])->name('login_admin');
-Route::post('/postlogin', [LoginController::class, 'postlogin']);
-Route::post('/postlogin_siswa', [LoginController::class, 'postlogin_siswa']);
+Route::post('/postLogin', [LoginController::class, 'postlogin']);
 Route::post('/postloginAdmin', [LoginController::class, 'postloginAdmin']);
 
 
@@ -45,7 +44,7 @@ Route::group(['middleware' => ['auth', 'cekLevel:admin']], function(){
 	Route::get('/beranda', [HomeController::class, 'index']);
 	
 	Route::get('/siswa', [SiswaController::class, 'index']);
-	Route::get('/siswa/{id_kelas}', [SiswaController::class, 'indexByKelas']);
+	Route::get('/siswa/{id_kelas}/kelas', [SiswaController::class, 'indexByKelas'])->name('siswa.kelas');
 	Route::get('/siswa/tambah', [SiswaController::class, 'create']);
 	Route::post('/siswa/tambah', [SiswaController::class, 'store']);
 	Route::get('/siswa/edit/{id_siswa}', [SiswaController::class, 'edit']);
@@ -82,6 +81,10 @@ Route::group(['middleware' => ['auth', 'cekLevel:admin']], function(){
 	Route::get('/tabungan/tambah/{id_kelas}', [TabunganController::class, 'create']);
 	Route::post('/tabungan/tambah', [TabunganController::class, 'store']);
 	Route::get('/tabungan/total_tabungan/{id_kelas}', [TabunganController::class, 'total_tabungan']);
+	Route::get('/tabungan/rincian/{id_siswa}', [TabunganController::class, 'rincian_transaksi']);
+	Route::get('/pinjaman', [PinjamanController::class, 'data_pinjaman']);
+	Route::get('/pinjaman/pilih_siswa', [PinjamanController::class, 'pilih_siswa']);
+	Route::post('/proses_pinjam', [PinjamanController::class, 'proses_pinjam']);
 	Route::post('/tabungan/exportExcel', [TabunganController::class, 'exportExcel']);
 	Route::post('/tabungan/exportPDF', [TabunganController::class, 'exportPDF']);
 	Route::get('/logout/admin', [LoginController::class, 'logout_admin']);
@@ -109,7 +112,7 @@ Route::group(['middleware' => ['auth', 'cekLevel:siswa']], function(){
 	Route::post('/user/edit_siswa', [UserController::class, 'update_siswa']);
 	Route::get('/notifikasi/sudah-terbaca/{id_notifikasi}', [NotifikasiController::class, 'sudah_terbaca_siswa']);
 	Route::get('/siswa/pinjaman', [PinjamanController::class, 'data_pinjaman']);
-	Route::post('/siswa/proses_pinjam', [PinjamanController::class, 'proses_pinjam']);
+	
 	Route::get('/siswa/cicilan', [PinjamanController::class, 'data_cicilan']);
 	Route::post('/siswa/proses_cicilan', [PinjamanController::class, 'proses_cicilan']);
     Route::get('/logout', [LoginController::class, 'logout']);
@@ -125,11 +128,6 @@ Route::group(['middleware' => ['auth', 'cekLevel:orang tua']], function(){
     Route::get('/logout', [LoginController::class, 'logout']);
 });
 
-
-Route::group(['middleware' => ['auth', 'cekLevel:siswa,orang tua']], function(){
-	
-	
-});
 
 Route::get('/',[HomeController::class, 'login']);
 

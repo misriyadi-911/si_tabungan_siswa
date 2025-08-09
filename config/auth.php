@@ -46,10 +46,6 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
-            'siswa' => [
-            'driver' => 'session',
-            'provider' => 'siswa',
-        ],
     ],
 
     /*
@@ -73,10 +69,6 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
-        ],
-        'siswa' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Siswa::class,
         ],
 
         // 'users' => [

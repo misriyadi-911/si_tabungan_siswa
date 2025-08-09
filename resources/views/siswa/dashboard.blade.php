@@ -26,9 +26,9 @@
                 <!-- *************************************************************** -->
 
                 <div class="row">
-                  <div class="col-6">
+                  <div class="col-4">
                     <div class="card text-white">
-                      <div class="card-header bg-dark">
+                      <div class="card-header bg-success">
                         <h4 class="mb-0 text-white">Total Saldo</h4>
                       </div>
 
@@ -38,14 +38,26 @@
                     </div>
                   </div>
 
-                  <div class="col-6">
+                  <div class="col-4">
                     <div class="card text-white">
-                      <div class="card-header bg-dark">
-                        <h4 class="mb-0 text-white">Total Pinjaman</h4>
+                      <div class="card-header bg-warning">
+                        <h4 class="mb-0 text-white">Total Cicilan</h4>
                       </div>
 
                       <div class="card-body">
-                        <h2 class="card-title text-dark">@currency($total_pinjaman)</h2>
+                        <h2 class="card-title text-dark">@currency($total_cicilan)</h2>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-4">
+                    <div class="card text-white">
+                      <div class="card-header bg-danger">
+                        <h4 class="mb-0 text-white">Sisa Pinjaman</h4>
+                      </div>
+
+                      <div class="card-body">
+                        <h2 class="card-title text-dark">@currency($sisa_pinjaman)</h2>
                       </div>
                     </div>
                   </div>

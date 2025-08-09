@@ -17,38 +17,38 @@
                         <!-- Logo icon -->
                         @if(auth()->user()->level == 'orang tua')
                         <a href="{{url('/orang_tua/dashboard')}}">
-                            <b class="logo-icon">
+                            {{-- <b class="logo-icon">
                                 <!-- Dark Logo icon -->
                                 <img src="{{asset('Template')}}/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
                                 <!-- Light Logo icon -->
                                 <img src="{{asset('Template')}}/assets/images/logo-icon.png" alt="homepage" class="light-logo" />
-                            </b>
+                            </b> --}}
                             <!--End Logo icon -->
                             <!-- Logo text -->
                             <span class="logo-text">
                                 <!-- dark Logo text -->
-                                <img src="{{asset('Template')}}/assets/images/icon-text.png" alt="homepage" class="dark-logo" />
+                                <img src="{{asset('img')}}/icon_nama.png" alt="homepage" class="dark-logo" />
                                 <!-- Light Logo text -->
-                                <img src="{{asset('Template')}}/assets/images/icon-text-putih.png" class="light-logo" alt="homepage" />
+                                <img src="{{asset('img')}}/icon_nama.png" class="light-logo" alt="homepage" />
                             </span>
                         </a>
                         @endif
 
                         @if(auth()->user()->level == 'siswa')
                         <a href="{{url('/siswa/dashboard')}}">
-                            <b class="logo-icon">
+                            {{-- <b class="logo-icon">
                                 <!-- Dark Logo icon -->
                                 <img src="{{asset('Template')}}/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
                                 <!-- Light Logo icon -->
                                 <img src="{{asset('Template')}}/assets/images/logo-icon.png" alt="homepage" class="light-logo" />
-                            </b>
+                            </b> --}}
                             <!--End Logo icon -->
                             <!-- Logo text -->
                             <span class="logo-text">
                                 <!-- dark Logo text -->
-                                <img src="{{asset('Template')}}/assets/images/icon-text.png" alt="homepage" class="dark-logo" />
+                                <img src="{{asset('img')}}/icon_nama.png" alt="homepage" class="dark-logo" />
                                 <!-- Light Logo text -->
-                                <img src="{{asset('Template')}}/assets/images/icon-text-putih.png" class="light-logo" alt="homepage" />
+                                <img src="{{asset('img')}}/icon_nama.png" class="light-logo" alt="homepage" />
                             </span>
                         </a>
                         @endif
@@ -91,7 +91,7 @@
                                     ?>
                                 </span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown">
+                            {{-- <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown">
                                 <ul class="list-style-none">
                                     <li>
                                         <div class="message-center notifications position-relative">
@@ -142,7 +142,7 @@
                                         
                                     </li>
                                 </ul>
-                            </div>
+                            </div> --}}
                         </li>
                         <!-- End Notification -->
                         <!-- ============================================================== -->

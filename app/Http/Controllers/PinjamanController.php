@@ -7,25 +7,67 @@ use App\Http\Requests\ErrorFormRequest;
 use App\Models\Pinjaman;
 use App\Models\Tahun_pelajaran;
 use App\Models\Tabungan;
+use App\Models\Siswa;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class PinjamanController extends Controller
 {
+    public function pinjaman()
+    {
+        // Logic to retrieve and display data related to pinjaman (loans)
+        // This could involve fetching data from the database and passing it to a view
+        $data_pinjaman = Pinjaman::all(); // Replace with actual data retrieval logic
+        $data_siswa = Siswa::orderBy('nama_siswa', 'asc')->get();
+        $data_tapel = Tahun_pelajaran::where('status_tapel','=','aktif')->get();
+        return view('pinjaman.data_pinjaman', compact('data_pinjaman', 'data_tapel', 'data_siswa'));
+    }
+    
     public function data_pinjaman()
     {
         // Logic to retrieve and display data related to pinjaman (loans)
         // This could involve fetching data from the database and passing it to a view
-        $data_pinjaman = Pinjaman::all();
-        $id_user = auth()->user()->id_user;
-        $total_pinjaman = Pinjaman::where('id_siswa', '=', $id_user)->sum('nominal_pinjaman');
-        Blade::directive('currency', function ($expression) {
-            return "Rp. <?php echo number_format($expression, 0, ',', '.'); ?>";
+        $data_rekap = Pinjaman::select(
+        '*','id_siswa',
+        DB::raw('SUM(nominal_pinjaman) as total_pinjaman')
+        )
+        ->groupBy('id_siswa')
+        ->with('siswa')
+        ->get()
+        ->map(function ($item) {
+            $total = $item->total_pinjaman;
+            $hibah = ($total >= 1000000) ? floor($total / 1000000) * 20000 : 0;
+            $item->total_hibah = $hibah;
+            return $item;
         });
+        $data_cicilan = Tabungan::where('keterangan', 'like', '%cicilan%')
+            ->select(
+                '*',
+                DB::raw('SUM(nominal_kredit) as total_cicilan')
+            )
+            ->groupBy('id_siswa')
+            ->get()
+            ->keyBy('id_siswa');
+        $sisa_pinjaman = $data_rekap->map(function ($item) use ($data_cicilan) {
+            $total_cicilan = $data_cicilan[$item->id_siswa]->total_cicilan ?? 0;
+            $item->sisa_pinjaman = $item->total_pinjaman - $total_cicilan;
+            return $item;
+        });
+        // dd($data_cicilan); 
         $data_tapel = Tahun_pelajaran::where('status_tapel','=','aktif')->get(); // Replace with actual data retrieval logic
-        return view('pinjaman.data_pinjaman', compact('data_pinjaman', 'data_tapel', 'total_pinjaman'));
+        return view('pinjaman.data_pinjaman', compact('data_rekap', 'data_tapel','data_cicilan', 'sisa_pinjaman'));
+    }
+
+    public function pilih_siswa()
+    {
+        // Logic to retrieve and display data related to pinjaman (loans)
+        // This could involve fetching data from the database and passing it to a view
+        $data_siswa = Siswa::orderBy('nama_siswa', 'asc')->get();
+        $data_tapel = Tahun_pelajaran::where('status_tapel', '=', 'aktif')->get();
+        return view('pinjaman.pilih_siswa', compact('data_siswa', 'data_tapel'));
     }
 
     public function proses_pinjam(Request $request)
@@ -85,13 +127,10 @@ class PinjamanController extends Controller
     public function proses_cicilan (Request $request)
     {
         $rules = [
-            'tgl_cicilan' => 'required|date',
             'nominal_kredit' => 'required',
         ];
 
         $text = [
-            'tgl_cicilan.required' => 'Tanggal Cicilan tidak boleh kosong',
-            'tgl_cicilan.date' => 'Format Tanggal Cicilan tidak valid',
             'nominal_kredit.required' => 'Nominal Cicilan tidak boleh kosong',
         ];
 
@@ -104,7 +143,7 @@ class PinjamanController extends Controller
         $data_tabungan = new Tabungan;
         $data_tabungan->id_siswa = $request->id_siswa;
         $data_tabungan->id_tapel = $request->id_tapel;
-        $data_tabungan->tgl_transaksi = $request->tgl_cicilan;
+        $data_tabungan->tgl_transaksi = date('Y-m-d');
         $data_tabungan->nominal_debit = '0';
         $data_tabungan->nominal_kredit = $request->nominal_kredit;
         $data_tabungan->keterangan = 'cicilan';
