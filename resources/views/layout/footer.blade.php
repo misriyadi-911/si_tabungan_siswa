@@ -1,7 +1,7 @@
 <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center text-muted">
-                Sistem Informasi Tabungan Digital Siswa | {{date('Y')}}
+                Simpel - Tabungan dan Simpan Pinjam Siswa | {{date('Y')}}
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

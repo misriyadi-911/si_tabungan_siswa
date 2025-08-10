@@ -572,7 +572,7 @@ body#layout #about,body#layout #service,body#layout .parallax-funfactor,body#lay
                      <div id='header-inner'>
                         <div class='titlewrapper'>
                            <h1 class='title'>
-                              <img src="/img/logo_dashboard.png" alt="" style="height: 45px"><img src="/img/tulisan_dashboard.png" alt="" style="height: 15px">
+                              <img src="/img/icon_bulat.png" alt="" style="height: 45px"><img src="/img/icon_nama.png" alt="" style="height: 45px">
                            </h1>
                         </div>
                         <div class='descriptionwrapper'>
@@ -588,9 +588,9 @@ body#layout #about,body#layout #service,body#layout .parallax-funfactor,body#lay
                      <li class=''>
                         <a href='/#home'>Beranda</a>
                      </li>
-                     <li>
+                     {{-- <li>
                         <a href='/#about'>Profil Pengembang</a>
-                     </li>
+                     </li> --}}
                      <li>
                         <a href='/#petunjuk'>Petunjuk Penggunaan</a>
                      </li>
@@ -615,16 +615,16 @@ body#layout #about,body#layout #service,body#layout .parallax-funfactor,body#lay
                         <!-- Header Sub Title -->
                         <h5 class='banner-txt-position-'>Hai, Selamat datang di </h5>
                         <!-- Header Name -->
-                        <h1 class='text-uppercase'>SISTEM INFORMASI </h1>
+                        <h1 class='text-uppercase'>SIMPEL (Simpanan Pelajar)</h1>
                         <!-- Header Headlines -->
                         <p class='hero-subtitle'>
-                         <span class='typist-text typist-blink' data-typist='Madrasah Aliyah Al-Ghazali' id='typist-element'>Tabungan Digital Siswa</span>
+                         <span class='typist-text typist-blink' data-typist='Madrasah Ibtidaiyah Al-Ghazali' id='typist-element'>Tabungan dan Simpan Pinjam Siswa</span>
                       </p>
                       <!-- Header Social Links -->
                       <div class='social-link'>
-                        <a href='https://www.facebook.com/misrifromeastkaduara.misrifromeastkaduara/'><i class='fa fa-facebook'></i></a>
-                        <a href='https://twitter.com/M_Isriyadi'><i class='fa fa-twitter'></i></a>
-                        <a href='https://www.instagram.com/misri_yadi/'><i class='fa fa-instagram'></i></a>
+                        <a href='https://www.facebook.com/mi.alghazali?locale=id_ID' target="_blank"><i class='fa fa-facebook'></i></a>
+                        <a href='https://www.youtube.com/@mialghazali' target="_blank"><i class='fa fa-youtube'></i></a>
+                        <a href='https://www.instagram.com/mi_al9hazali/' target="_blank"><i class='fa fa-instagram'></i></a>
                      </div>
                   </div>
                </div>
@@ -639,8 +639,8 @@ body#layout #about,body#layout #service,body#layout .parallax-funfactor,body#lay
 
 
    <!--About section start-->
-   <section class='section section-padding about' id='about'>
-      <div class='container'>
+{{-- <section class='section section-padding about' id='about'>
+   <div class='container'>
          <!--Page Header-->
          <div class='row page-header wow fadeInUp animated' style='visibility: visible;'>
             <h1>
@@ -686,7 +686,7 @@ body#layout #about,body#layout #service,body#layout .parallax-funfactor,body#lay
          </div>
       </div>
    </div>
-</section>
+</section> --}}
 <!--About section end-->
 
 <!-- petunjuk penggunaan -->
@@ -711,7 +711,7 @@ body#layout #about,body#layout #service,body#layout .parallax-funfactor,body#lay
 <div class='aisa-copyright'>
    <div class='container'>
       <div class='row'>
-         <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 aisa-left'>Sistem Informasi Digital Sisw | Designed By <a href='http://www.themeswear.com/' id='themeswear' ref='dofollow' title='PoweredBy'>PoweredBy</a>.</div>
+         <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 aisa-left'>Simpel - Tabungan dan Simpan Pinjam Siswa | {{date('Y')}} | Designed By <a href='http://www.themeswear.com/' id='themeswear' ref='dofollow' title='PoweredBy'>PoweredBy</a>.</div>
       </div>
    </div>
 </div>

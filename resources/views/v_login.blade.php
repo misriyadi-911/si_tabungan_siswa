@@ -22,8 +22,8 @@
         @csrf
         <img class="avatar" src="{{asset('img')}}/img/avatar.svg" alt="">
         <h2>Form Login</h2>
-        <h5>Sistem Informasi</h5>
-        <h4>Tabungan Siswa Digital</h4>
+        <h5>Tabungan dan Simpan Pinjam Siswa</h5>
+        <h4>Madrasah Ibtidaiyah Al-Ghazali</h4>
         
         <!-- form input username -->
         <div class="input-div one">
