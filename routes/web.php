@@ -82,7 +82,11 @@ Route::group(['middleware' => ['auth', 'cekLevel:admin']], function(){
 	Route::post('/tabungan/tambah', [TabunganController::class, 'store']);
 	Route::get('/tabungan/total_tabungan/{id_kelas}', [TabunganController::class, 'total_tabungan']);
 	Route::get('/tabungan/rincian/{id_siswa}', [TabunganController::class, 'rincian_transaksi']);
-	Route::get('/pinjaman', [PinjamanController::class, 'data_pinjaman']);
+	Route::post('/tabungan/edit', [TabunganController::class, 'edit_transaksi']);
+	Route::get('/pinjaman/total', [PinjamanController::class, 'total_pinjaman']);
+	Route::get('/pinjaman/histori', [PinjamanController::class, 'histori_pinjaman']);
+	Route::post('/pinjaman/edit', [PinjamanController::class, 'edit_pinjaman']);
+	Route::get('/pinjaman/hapus/{id_pinjaman}', [PinjamanController::class, 'hapus_pinjaman']);
 	Route::get('/pinjaman/pilih_siswa', [PinjamanController::class, 'pilih_siswa']);
 	Route::post('/proses_pinjam', [PinjamanController::class, 'proses_pinjam']);
 	Route::post('/tabungan/exportExcel', [TabunganController::class, 'exportExcel']);
@@ -107,6 +111,7 @@ Route::group(['middleware' => ['auth', 'cekLevel:siswa']], function(){
 	Route::get('/siswa/tabungan/rincian', [SiswaController::class, 'rincian_tabungan']);
 	Route::get('/siswa/tabungan/total', [SiswaController::class, 'total_tabungan']);
 	Route::get('/siswa/pembayaran', [SiswaController::class, 'input_bayar']);
+	Route::get('/siswa/pinjaman/{id_siswa}', [SiswaController::class, 'histori_pinjaman']);
 	Route::post('/siswa/proses_bayar', [SiswaController::class, 'proses_bayar']);
 	Route::get('/user/edit_siswa/{id_user}/{level}', [UserController::class, 'edit_siswa']);
 	Route::post('/user/edit_siswa', [UserController::class, 'update_siswa']);

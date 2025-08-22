@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class TabunganController extends Controller
 {
@@ -40,7 +41,8 @@ class TabunganController extends Controller
     {
 
         $data_tabungan = Tabungan::where('id_siswa', $id_siswa)->get();
-        return view('tabungan.rincian_transaksi', compact('data_tabungan'));
+        $data_tapel = Tahun_pelajaran::where('status_tapel','=','aktif')->get();
+        return view('tabungan.rincian_transaksi', compact('data_tabungan', 'data_tapel'));
     }   
     /**
      * Show the form for creating a new resource.
@@ -175,6 +177,39 @@ class TabunganController extends Controller
         });
         
         return view('/tabungan.total_tabungan', compact('data_tabungan'));
+    }
+
+    public function edit_transaksi (Request $request)
+    {
+        $rules = [
+            'nominal_debit' => 'required',
+            'nominal_kredit' => 'required',
+        ];
+
+        $text = [
+            'nominal_debit.required' => 'Nominal Debit tidak boleh kosong',
+            'nominal_kredit.required' => 'Nominal Kredit tidak boleh kosong',
+        ];
+
+        $validasi = Validator::make($request->all(), $rules, $text);
+
+        if($validasi->fails()) {
+            return response()->json(['success' => 0, 'text' => $validasi->errors()->first()], 422);
+        }
+
+        $data_tabungan = Tabungan::find($request->id_transaksi);
+        $data_tabungan->id_siswa = $request->id_siswa;
+        $data_tabungan->id_tapel = $request->id_tapel;
+        $data_tabungan->tgl_transaksi = date('Y-m-d');
+        $data_tabungan->nominal_debit = $request->nominal_debit;
+        $data_tabungan->nominal_kredit = $request->nominal_kredit;
+        $data_tabungan->save();
+
+        return response()->json([
+            'success' => 1, 
+            'text' => 'Data Berhasil Diupdate',
+            'id_siswa' => $request->id_siswa
+        ]);
     }
 
 

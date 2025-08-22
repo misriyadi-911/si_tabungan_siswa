@@ -1,16 +1,16 @@
 @extends('layout.main')
 
 @section('title')
-Data Pinjaman
+Data Total Pinjaman
 @endsection
 
 @section('title_halaman')
-Data Pinjaman
+Data Total Pinjaman
 @endsection
 
 
 @section('link_halaman')
-<a href="{{ url('/beranda') }}">Pinjaman </a> >> <a href="{{ url('/siswa') }}"> Data Pinjaman</a>
+<a href="{{ url('/beranda') }}">Pinjaman </a> >> <a href="{{ url('/pinjaman/total') }}"> Data Total Pinjaman</a>
 @endsection
 
 @section('user')

@@ -66,6 +66,14 @@
                                 <span class="hide-menu">Bayar Cicilan</span>
                             </a>
                         </li>
+
+                        <li class="nav-small-cap"><span class="hide-menu">Data Pinjaman</span></li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{url('/siswa/pinjaman/'.auth()->user()->siswa->id_siswa)}}"
+                                aria-expanded="false">
+                                <i class="icon-basket"></i>
+                                <span class="hide-menu">Histori Pinjaman</span>
+                            </a>
+                        </li>
                         @endif
 
                         
@@ -172,9 +180,13 @@
                         </li>
 
                         <li class="nav-small-cap"><span class="hide-menu">Data Pinjaman</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{url('/pinjaman')}}"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{url('/pinjaman/histori')}}"
                                 aria-expanded="false"><i class="icon-credit-card"></i><span
-                                    class="hide-menu">Pinjaman</span></a>
+                                    class="hide-menu">Histori Pinjaman</span></a>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{url('/pinjaman/total')}}"
+                                aria-expanded="false"><i class="icon-credit-card"></i><span
+                                    class="hide-menu">Total Pinjaman</span></a>
                         </li>
                         @endif
                         

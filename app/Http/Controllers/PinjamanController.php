@@ -26,7 +26,7 @@ class PinjamanController extends Controller
         return view('pinjaman.data_pinjaman', compact('data_pinjaman', 'data_tapel', 'data_siswa'));
     }
     
-    public function data_pinjaman()
+    public function total_pinjaman()
     {
         // Logic to retrieve and display data related to pinjaman (loans)
         // This could involve fetching data from the database and passing it to a view
@@ -58,7 +58,15 @@ class PinjamanController extends Controller
         });
         // dd($data_cicilan); 
         $data_tapel = Tahun_pelajaran::where('status_tapel','=','aktif')->get(); // Replace with actual data retrieval logic
-        return view('pinjaman.data_pinjaman', compact('data_rekap', 'data_tapel','data_cicilan', 'sisa_pinjaman'));
+        return view('pinjaman.total_pinjaman', compact('data_rekap', 'data_tapel','data_cicilan', 'sisa_pinjaman'));
+    }
+
+    public function histori_pinjaman()
+    {
+        $data_histori = Pinjaman::with('siswa')
+            ->orderBy('tgl_pinjam', 'asc')
+            ->get();
+        return view('pinjaman.histori_pinjaman', compact('data_histori'));
     }
 
     public function pilih_siswa()
@@ -68,6 +76,29 @@ class PinjamanController extends Controller
         $data_siswa = Siswa::orderBy('nama_siswa', 'asc')->get();
         $data_tapel = Tahun_pelajaran::where('status_tapel', '=', 'aktif')->get();
         return view('pinjaman.pilih_siswa', compact('data_siswa', 'data_tapel'));
+    }
+
+    public function edit_pinjaman (Request $request)
+    {
+        $rules = [
+            'nominal_pinjaman' => 'required',
+        ];
+
+        $text = [
+            'nominal_pinjaman.required' => 'Nominal Pinjaman tidak boleh kosong',
+        ];
+
+        $validasi = Validator::make($request->all(), $rules, $text);
+
+        if($validasi->fails()) {
+            return response()->json(['success' => 0, 'text' => $validasi->errors()->first()], 422);
+        }
+
+        $data_pinjaman = Pinjaman::find($request->id_siswa);
+        $data_pinjaman->nominal_pinjaman = $request->nominal_pinjaman;
+        $data_pinjaman->save();
+
+        return response()->json(['success' => 1, 'text' => 'Data Berhasil Diubah'], 200);
     }
 
     public function proses_pinjam(Request $request)
@@ -102,6 +133,13 @@ class PinjamanController extends Controller
             return response()->json(['text' => 'Data Gagal Disimpan'], 400);
         }
 
+    }
+
+    public function hapus_pinjaman ($id_pinjaman)
+    {
+        $data_pinjaman = Pinjaman::find($id_pinjaman);
+        $data_pinjaman->delete();
+        return redirect()->back()->with('success', 'Data Pinjaman Berhasil Dihapus');
     }
 
     public function data_cicilan()

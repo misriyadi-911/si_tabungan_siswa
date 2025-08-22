@@ -148,7 +148,7 @@ Pilih Siswa
             contentType:false,
             success : function(res) {
                 console.log(res);
-                window.location.href = "{{ url('/pinjaman') }}"
+                window.location.href = "{{ url('/pinjaman/histori') }}"
                 const Toast = Swal.mixin({
                             toast : true,
                             position : 'top-end',

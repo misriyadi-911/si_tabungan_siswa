@@ -48,6 +48,12 @@ class SiswaController extends Controller
         return view('siswa.index', compact('data_siswa', 'data_orangtua'));
     }
 
+    public function histori_pinjaman ($id_siswa)
+    {
+        $data_pinjaman = Pinjaman::where('id_siswa', $id_siswa)->get();
+        return view('siswa.histori_pinjaman', compact('data_pinjaman'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
