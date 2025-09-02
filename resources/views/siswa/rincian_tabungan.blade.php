@@ -58,14 +58,13 @@
                 				</tr>
                 			</table>
                 			<hr class="mb-4">              	
-		                    <table id="data_table" class="table data_table">
+		                    <table id="data_table" class="table data_table" style="table-layout: fixed; width: 100%;">
 		                        <thead class="bg-primary text-white">
 		                            <tr>
 		                                <th scope="col" width="65px">No</th>
 		                                <th scope="col">Tanggal Transaksi</th>
-		                                <th scope="col">Debit</th>
-		                                <th scope="col">Kredit</th>
-		                                <th scope="col" width="130px">Nominal</th>
+		                                <th scope="col">Nominal Debit</th>
+		                                <th scope="col">Nominal Kredit</th>
 		                            </tr>
 		                        </thead>
 		                        <tbody>
@@ -76,20 +75,22 @@
 		                        					{{date('d-m-Y', strtotime($item->tgl_transaksi))}}
 		                        				</td>
 		                        				<td width="40px">
-		                        					@if($item->nominal_debit > 0)
+		                        					{{-- @if($item->nominal_debit > 0)
 		                        						
 		                        						
 		                        						<h3 style="color: #20B2AA">&#10004;</h3>
 		                        						<!--<h3 style="color: #00FA9A">&#10004;</h3>-->
-		                        					@endif
+		                        					@endif --}}
+													@currency($item->nominal_debit)
 		                        				</td>
 		                        				<td>
 		                        					
-		                        					@if($item->nominal_kredit > 0)
+		                        					{{-- @if($item->nominal_kredit > 0)
 		                        						<h3 style="color: #20B2AA">&#10004;</h3>
-		                        					@endif
+		                        					@endif --}}
+													@currency($item->nominal_kredit)
 		                        				</td>
-		                        				<td width="130px">
+		                        				{{-- <td width="130px">
 		                        					
                                                     @if($item->nominal_kredit > 0)
                                                         @currency($item->nominal_kredit)
@@ -100,7 +101,7 @@
                                                     @endif
 
 
-		                        				</td>
+		                        				</td> --}}
 		                        			</tr>
 		                        		@endforeach
 		                        </tbody>

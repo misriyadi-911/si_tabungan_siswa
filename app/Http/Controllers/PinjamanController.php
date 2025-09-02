@@ -124,7 +124,22 @@ class PinjamanController extends Controller
         $data_pinjaman->id_siswa = $request->id_siswa;
         $data_pinjaman->id_tapel = $request->id_tapel;
         $data_pinjaman->tgl_pinjam = $request->tgl_pinjam;
-        $data_pinjaman->nominal_pinjaman = $request->nominal_pinjaman;        
+        $nominal_debit = Tabungan::where('id_siswa', '=', $request->id_siswa)->sum('nominal_debit');
+        $nominal_kredit = Tabungan::where('id_siswa', '=', $request->id_siswa)->sum('nominal_kredit');
+        $nominal_saldo = $nominal_debit - $nominal_kredit;
+        $allowed_pinjaman = ($nominal_saldo*70)/100;
+        if($request->nominal_pinjaman > $allowed_pinjaman) {
+            return response()->json([
+                'success' => 0,
+                'text' => 'Nominal Pinjaman Melebihi Batas. Maksimal Pinjaman Anda 
+                        <span style="color:red;">Rp. '.number_format($allowed_pinjaman, 0, ',', '.').'</span> 
+                        Dan Total Saldo Anda 
+                        <span style="color:red;">Rp. '.number_format($nominal_saldo, 0, ',', '.').'</span>'
+            ], 422);
+        }else{
+            $data_pinjaman->nominal_pinjaman = $request->nominal_pinjaman;
+        }
+           
         $data_pinjaman->save();
         
         if($data_pinjaman->save()) {
@@ -211,7 +226,7 @@ class PinjamanController extends Controller
 
         $data_tabungan->save();
         if($data_tabungan->save()) {
-            return response()->json(['text' => 'Data Berhasil Disimpan'], 200);
+            return response()->json(['text' => 'Berhasil Bayar Cicilan'], 200);
         } else {
             return response()->json(['text' => 'Data Gagal Disimpan'], 400);
         }

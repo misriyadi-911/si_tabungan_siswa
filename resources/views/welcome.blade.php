@@ -591,9 +591,9 @@ body#layout #about,body#layout #service,body#layout .parallax-funfactor,body#lay
                      {{-- <li>
                         <a href='/#about'>Profil Pengembang</a>
                      </li> --}}
-                     <li>
+                     {{-- <li>
                         <a href='/#petunjuk'>Petunjuk Penggunaan</a>
-                     </li>
+                     </li> --}}
                      <li>
                         <a href='/login'>Login</a>
                      </li>
@@ -617,9 +617,9 @@ body#layout #about,body#layout #service,body#layout .parallax-funfactor,body#lay
                         <!-- Header Name -->
                         <h1 class='text-uppercase'>SIMPEL (Simpanan Pelajar)</h1>
                         <!-- Header Headlines -->
-                        <p class='hero-subtitle'>
+                        {{-- <p class='hero-subtitle'>
                          <span class='typist-text typist-blink' data-typist='Madrasah Ibtidaiyah Al-Ghazali' id='typist-element'>Tabungan dan Simpan Pinjam Siswa</span>
-                      </p>
+                        </p> --}}
                       <!-- Header Social Links -->
                       <div class='social-link'>
                         <a href='https://www.facebook.com/mi.alghazali?locale=id_ID' target="_blank"><i class='fa fa-facebook'></i></a>
@@ -690,7 +690,7 @@ body#layout #about,body#layout #service,body#layout .parallax-funfactor,body#lay
 <!--About section end-->
 
 <!-- petunjuk penggunaan -->
-<section class='section section-padding quoute' id="petunjuk">
+{{-- <section class='section section-padding quoute' id="petunjuk">
    <div class='container'>
       <div class='row quoute-content'>
          <div class='col-md-8'>
@@ -704,7 +704,7 @@ body#layout #about,body#layout #service,body#layout .parallax-funfactor,body#lay
          </div>
       </div>
    </div>
-</section>
+</section> --}}
 <!-- end petunjuk peggunaan -->
 
 

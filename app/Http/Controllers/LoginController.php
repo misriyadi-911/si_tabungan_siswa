@@ -22,7 +22,7 @@ class LoginController extends Controller
     	if(Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             // dd(Auth::user());
             if(auth()->user()->level == "admin") {
-                return redirect('/login')->with('admin', 'Tidak bisa login');
+                return redirect('/beranda');
             } else if(auth()->user()->level == "siswa"){
                 return redirect('/siswa/dashboard');
             } else if(auth()->user()->level == "orang tua"){
@@ -65,6 +65,6 @@ class LoginController extends Controller
     public function logout_admin()
     {
         Auth::logout();
-        return redirect('/login/admin');
+        return redirect('/login');
     }
 }

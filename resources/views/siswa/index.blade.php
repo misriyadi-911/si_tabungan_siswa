@@ -128,12 +128,20 @@ Data Siswa
 											</div>
 											<div class="form-group">
 												<label for="nohp_siswa">No HP</label>
-												<input name="nohp_siswa" type="text" class="form-control" id="nohp_siswa">
+												<input  name="nohp_siswa" 
+														type="text" 
+														class="form-control" 
+														id="nohp_siswa" 
+														inputmode="numeric" 
+														pattern="[0-9]*"
+														oninput="this.value = this.value.replace(/[^0-9]/g, '')">
 											</div>
 
 											<div class="form-group">
 												<label for="jenis_kelamin_siswa">Jenis Kelamin</label>
 												<select name="jenis_kelamin_siswa" id="jenis_kelamin_siswa" class="form-control">
+													<option value="">Pilih Jenis Kelamin</option>
+													<hr>
 													<option value="Laki-laki">Laki-laki</option>
 													<option value="Perempuan">Perempuan</option>
 												</select>
@@ -156,11 +164,11 @@ Data Siswa
 											</div>
 											<div class="form-group">
 												<label for="username">Username</label>
-												<input name="username" type="text" class="form-control" id="username">
+												<input name="username" type="text" class="form-control" id="username" autocomplete="off">
 											</div>
 											<div class="form-group">
 												<label for="password">Password</label>
-												<input name="password" type="password" class="form-control" id="password">
+												<input name="password" type="password" class="form-control" id="password" autocomplete="new-password">
 											</div>
 										</div>
 									</div>	                                
@@ -188,7 +196,13 @@ Data Siswa
 									</div>
 									<div class="form-group">
 										<label for="nohp_orangtua">No HP</label>
-										<input name="nohp_orangtua" type="number" class="form-control" id="nohp_orangtua">
+										<input  name="nohp_orangtua" 
+														type="text" 
+														class="form-control" 
+														id="nohp_orangtua" 
+														inputmode="numeric" 
+														pattern="[0-9]*"
+														oninput="this.value = this.value.replace(/[^0-9]/g, '')">
 									</div>                                
 								</div>
 							</div>
@@ -338,7 +352,14 @@ Data Siswa
 											</div>
 											<div class="form-group">
 												<label for="nohp_siswa">No HP</label>
-												<input name="nohp_siswa" type="text" class="form-control" id="nohp_siswa" value="{{$siswa->nohp_siswa}}">
+												<input  name="nohp_siswa" 
+														type="text" 
+														class="form-control" 
+														id="nohp_siswa" 
+														inputmode="numeric" 
+														pattern="[0-9]*"
+														oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+														value="{{$siswa->nohp_siswa}}">
 											</div>
 										</div>
 
@@ -347,8 +368,8 @@ Data Siswa
 											<div class="form-group">
 												<label for="jenis_kelamin_siswa">Jenis Kelamin</label>
 												<select name="jenis_kelamin_siswa" id="jenis_kelamin_siswa" class="form-control">
-													<option value="{{$siswa->jenis_kelamin_siswa}}">{{$siswa->jenis_kelamin_siswa}}</option>
-													<option value="" disabled="">-- Pilih Jenis Kelamin --</option>
+													<option value={{$siswa->jenis_kelamin_siswa}}>{{$siswa->jenis_kelamin_siswa}}</option>
+													<hr>
 													<option value="Laki-laki">Laki-laki</option>
 													<option value="Perempuan">Perempuan</option>
 												</select>

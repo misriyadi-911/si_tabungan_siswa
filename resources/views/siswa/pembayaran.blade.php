@@ -240,7 +240,14 @@
                                             </div>
                                             <div class="form-group">
                                                 <h5 id="nominal">Nominal</h5>
-                                                <input name="nominal_kredit" type="number" class="form-control" id="nominal_kredit">
+                                                {{-- <input name="nominal_kredit" type="number" class="form-control" id="nominal_kredit"> --}}
+                                                <input  name="nominal_kredit" 
+														type="text" 
+														class="form-control" 
+														id="nominal_kredit" 
+														inputmode="numeric" 
+														pattern="[0-9]*"
+														oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                             </div>
                                         </div>
                                     </div>                                  

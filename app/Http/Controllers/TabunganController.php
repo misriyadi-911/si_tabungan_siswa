@@ -33,6 +33,8 @@ class TabunganController extends Controller
         //$data_tabungan = Tabungan::orderBy('tgl_transaksi');
         $data_tabungan_filter = Tabungan::join('siswa', 'transaksi.id_siswa', '=', 'siswa.id_siswa')
                                 ->where('siswa.id_kelas', $id_kelas)
+                                ->groupBy('siswa.id_siswa')
+                                ->orderBy('nama_siswa', 'asc')
                                 ->get();
         return view('tabungan.index', compact('data_tabungan_filter'));
     }

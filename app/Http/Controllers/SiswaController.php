@@ -36,16 +36,14 @@ class SiswaController extends Controller
     
     public function index()
     {
-        $data_siswa = Siswa::all();
-        $data_orangtua = Orang_Tua::all();
-        return view('siswa.index', compact('data_siswa', 'data_orangtua'));
+        $data_siswa = Siswa::orderBy('nama_siswa', 'asc')->get();
+        return view('siswa.index', compact('data_siswa'));
     }
 
     public function indexByKelas($id_kelas)
     {
-        $data_siswa = Siswa::where('id_kelas', $id_kelas)->get();
-        $data_orangtua = Orang_Tua::all();
-        return view('siswa.index', compact('data_siswa', 'data_orangtua'));
+        $data_siswa = Siswa::where('id_kelas', $id_kelas)->orderBy('nama_siswa', 'asc')->get();
+        return view('siswa.index', compact('data_siswa'));
     }
 
     public function histori_pinjaman ($id_siswa)
@@ -100,7 +98,7 @@ class SiswaController extends Controller
             'nohp_siswa.required'   => 'No HP tidak boleh kosong',
             'nohp_siswa.min' => 'No HP Minimal 10 digit',
             'nohp_siswa.max' => 'No HP Maksimal 12 digit',
-            'jenis_kelamin_siswa.required' => 'Jenis kelamin tidak boleh kosong',
+            'jenis_kelamin_siswa.required' => 'Pilih jenis kelamin terlebih dahulu',
             'kelas.required' => 'kelas tidak boleh kosong',
             'foto_siswa.required' => 'Foto tidak boleh kosong',
             'foto_siswa.max' => 'Ukuran tidak boleh lebih dari 2 MB',
@@ -147,7 +145,11 @@ class SiswaController extends Controller
         $Siswa->nama_siswa          = $request->nama_siswa;
         $Siswa->alamat_siswa        = $request->alamat_siswa;
         $Siswa->nohp_siswa          = $request->nohp_siswa;
-        $Siswa->jenis_kelamin_siswa = $request->jenis_kelamin_siswa;
+        if($request->jenis_kelamin_siswa == null) {
+            return response()->json(['success' => 0, 'text' => 'Pilih Jenis Kelamin terlebih dahulu'], 422);
+        } else {
+            $Siswa->jenis_kelamin_siswa = $request->jenis_kelamin_siswa;
+        }
         $Siswa->id_kelas            = $request->kelas;
         $Siswa->no_rekening         = $no_rekening;
         $Siswa->foto_siswa          = $foto_siswa;
@@ -292,6 +294,7 @@ class SiswaController extends Controller
         $data_siswa->delete();
         Orang_Tua::where('id_siswa','=',$id)->delete();
         Tabungan::where('id_siswa', $id)->delete();
+        Pinjaman::where('id_siswa', $id)->delete();
 
         Users::where('id_user','=',$id)
                 ->where('level', 'siswa')
