@@ -65,23 +65,32 @@
 		                                <th scope="col">Tanggal Transaksi</th>
 		                                <th scope="col">Nominal Debit</th>
 		                                <th scope="col">Nominal Kredit</th>
+		                                <th scope="col">Saldo</th>
 		                                <th scope="col">Aksi</th>
 		                            </tr>
 		                        </thead>
 		                        <tbody>
-									
+										@php
+											$saldo = 0;
+										@endphp
 		                        		@foreach ($data_tabungan as $item)
+											@php
+												$saldo += $item->nominal_debit - $item->nominal_kredit;
+		                        			@endphp
 		                        			<tr>
 		                        				<td width="65px" scope="row">{{$loop->iteration}}</td>
 		                        				<td>
 		                        					{{date('d-m-Y', strtotime($item->tgl_transaksi))}}
 		                        				</td>
 		                        				<td>
-		                        					{{$item->nominal_debit}}                   					
+		                        					@currency($item->nominal_debit)                   					
 		                        				</td>
 		                        				<td>
-		                        					{{$item->nominal_kredit}}                   					
+		                        					@currency($item->nominal_kredit)                   					
 		                        				</td>
+												<td>
+													@currency($saldo)
+												</td>
 												<td>
 													<a href="" class="btn btn-info" data-toggle="modal" data-target="#modalEdit-{{$item->id_transaksi}}">
 														<i class="fas fa-edit" ></i>
