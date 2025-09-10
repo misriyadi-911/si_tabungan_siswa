@@ -65,10 +65,17 @@
 		                                <th scope="col">Tanggal Transaksi</th>
 		                                <th scope="col">Nominal Debit</th>
 		                                <th scope="col">Nominal Kredit</th>
+		                                <th scope="col">Saldo</th>
 		                            </tr>
 		                        </thead>
 		                        <tbody>
+										@php
+											$saldo = 0;
+										@endphp
 		                        		@foreach ($data_tabungan as $item)
+											@php
+												$saldo += $item->nominal_debit - $item->nominal_kredit;
+		                        			@endphp
 		                        			<tr>
 		                        				<td width="65px" scope="row">{{$loop->iteration}}</td>
 		                        				<td>
@@ -89,6 +96,9 @@
 		                        						<h3 style="color: #20B2AA">&#10004;</h3>
 		                        					@endif --}}
 													@currency($item->nominal_kredit)
+		                        				</td>
+												<td>
+													@currency($saldo)
 		                        				</td>
 		                        				{{-- <td width="130px">
 		                        					
