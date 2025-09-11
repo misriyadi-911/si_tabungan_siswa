@@ -69,9 +69,9 @@ Data Histori Pinjaman
 								<td>{{ date('d-m-Y', strtotime($item->tgl_pinjam)) }}</td>
 								<td>{{$item->nominal_pinjaman}}</td>
                                 <td>
-                                    <a href="" class="btn btn-info" data-toggle="modal" data-target="#modalEdit-{{$item->id_pinjaman}}">
+                                    {{-- <a href="" class="btn btn-info" data-toggle="modal" data-target="#modalEdit-{{$item->id_pinjaman}}">
 										<i class="fas fa-edit" ></i>
-									</a>
+									</a> --}}
 
 									<a href="javascript:" class="btn btn-danger hapus_data" rel="{{$item->id_pinjaman}}">
 										<i class="fas fa-trash"></i>

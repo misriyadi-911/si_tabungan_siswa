@@ -160,7 +160,7 @@ Data Siswa
 											</div>
 											<div class="form-group">
 												<label for="foto_siswa">Foto</label>
-												<input name="foto_siswa" type="file" name="foto_siswa" class="form-control" id="foto_siswa">
+												<input name="foto_siswa" type="file" name="foto_siswa" class="form-control" id="foto_siswa" accept=".jpg,.jpeg,.png">
 											</div>
 											<div class="form-group">
 												<label for="username">Username</label>
@@ -386,7 +386,7 @@ Data Siswa
 												<label for="foto_siswa">Foto</label>
 												<img src="{{asset('img')}}/{{$siswa->foto_siswa}}" width="50%">
 												<input type="hidden" name="foto_lama" value="{{$siswa->foto_siswa}}">
-												<input name="foto_siswa" type="file" class="form-control" id="foto_siswa" value="{{$siswa->foto_siswa}}" >
+												<input name="foto_siswa" type="file" class="form-control" id="foto_siswa" value="{{$siswa->foto_siswa}}" accept=".jpg,.jpeg,.png">
 											</div>
 										</div>
 									</div>	                                

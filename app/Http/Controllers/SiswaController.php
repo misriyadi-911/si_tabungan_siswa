@@ -82,7 +82,7 @@ class SiswaController extends Controller
             'nohp_siswa' => 'required|min:10|max:12',
             'jenis_kelamin_siswa' => 'required',
             'kelas' => 'required',
-            'foto_siswa'=>'required|max:2000|mimes:jpeg,png,jpg,gif,svg',
+            'foto_siswa'=>'required|max:2000|mimes:jpeg,png,jpg',
             'username' => 'required|unique:Users,username',
             'password' => 'required',
             'nama_orangtua' => 'required',
