@@ -52,15 +52,22 @@ Pilih Siswa
                                 <th scope="col">No</th>
                                 <th scope="col">NIS</th>
                                 <th scope="col">Nama</th>
+                                <th scope="col">Limit Pinjaman</th>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data_siswa as $item)
+                            @foreach ($data_tabungan as $item)
+                            @php
+                                $total_debit = isset($item->total_tabungan_debit) ? (float) $item->total_tabungan_debit : 0;
+                                $total_kredit = isset($item->total_tabungan_kredit) ? (float) $item->total_tabungan_kredit : 0;
+                                $limit_tabungan = ($total_debit-$total_kredit) * 70 / 100;  
+                            @endphp
                             <tr>
                                 <td scope="row">{{$loop->iteration}}</td>
-                                <td>{{$item->nis}}</td>
-                                <td>{{$item->nama_siswa}}</td>
+                                <td>{{$item->siswa->nis}}</td>
+                                <td>{{$item->siswa->nama_siswa}}</td>
+                                <td>@currency($limit_tabungan)</td>
                                 <td>
                                     <a href="" class="btn btn-success" data-toggle="modal" data-target="#modalPinjam-{{ $item->id_siswa }}">
                                         <i class="fas fa-check-circle"></i>
@@ -78,8 +85,8 @@ Pilih Siswa
 
 
 <!-- Start modal tambah -->
-@foreach($data_siswa as $siswa)
-<div class="modal fade" id="modalPinjam-{{$siswa->id_siswa}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+@foreach($data_tabungan as $item)
+<div class="modal fade" id="modalPinjam-{{$item->siswa->id_siswa}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -91,7 +98,7 @@ Pilih Siswa
       <form action="{{ url('/proses_pinjam') }}" method="POST" enctype="multipart/form-data">
       <div class="modal-body">
          @csrf
-          <input type="hidden" name="id_siswa" value="{{$siswa->id_siswa}}">
+          <input type="hidden" name="id_siswa" value="{{$item->siswa->id_siswa}}">
           <input type="hidden" name="id_tapel" value="{{$data_tapel[0]->id_tapel}}">
                     <div class="row">
                         <div class="col-md-12 col-lg-12">

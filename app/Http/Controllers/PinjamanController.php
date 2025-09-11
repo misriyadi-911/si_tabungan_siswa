@@ -73,9 +73,22 @@ class PinjamanController extends Controller
     {
         // Logic to retrieve and display data related to pinjaman (loans)
         // This could involve fetching data from the database and passing it to a view
-        $data_siswa = Siswa::orderBy('nama_siswa', 'asc')->get();
+        // $data_siswa = Siswa::orderBy('nama_siswa', 'asc')->get();
+        $data_tabungan = Tabungan::join('siswa', 'transaksi.id_siswa', '=', 'siswa.id_siswa')
+            ->select(
+                'siswa.id_siswa',
+                'siswa.nis',
+                'siswa.nama_siswa',
+                DB::raw('COALESCE(SUM(transaksi.nominal_debit), 0) as total_tabungan_debit'),
+                DB::raw('COALESCE(SUM(transaksi.nominal_kredit), 0) as total_tabungan_kredit'),
+                DB::raw('COALESCE(SUM(transaksi.nominal_debit) - SUM(transaksi.nominal_kredit), 0) as total_saldo')
+            )
+            ->groupBy('siswa.id_siswa', 'siswa.nis', 'siswa.nama_siswa')
+            ->having('total_saldo', '>', 0)
+            ->orderBy('siswa.nama_siswa', 'asc')
+            ->get();
         $data_tapel = Tahun_pelajaran::where('status_tapel', '=', 'aktif')->get();
-        return view('pinjaman.pilih_siswa', compact('data_siswa', 'data_tapel'));
+        return view('pinjaman.pilih_siswa', compact('data_tapel', 'data_tabungan'));
     }
 
     public function edit_pinjaman (Request $request)
@@ -118,6 +131,31 @@ class PinjamanController extends Controller
 
         if($validasi->fails()) {
             return response()->json(['success' => 0, 'text' => $validasi->errors()->first()], 422);
+        }
+
+        // ✅ CEK APAKAH MASIH ADA TANGGUNGAN
+        $pinjaman_aktif = DB::table('pinjaman')
+            ->leftJoin('transaksi', function($join) {
+                $join->on('pinjaman.id_siswa', '=', 'transaksi.id_siswa')
+                    ->where('transaksi.keterangan', '=', 'cicilan');
+            })
+            ->select(
+                'pinjaman.id_pinjaman',
+                DB::raw('pinjaman.nominal_pinjaman as total_pinjam'),
+                DB::raw('COALESCE(SUM(transaksi.nominal_kredit),0) as total_cicilan')
+            )
+            ->where('pinjaman.id_siswa', $request->id_siswa)
+            ->groupBy('pinjaman.id_pinjaman', 'pinjaman.nominal_pinjaman')
+            ->havingRaw('total_pinjam > total_cicilan') // artinya belum lunas
+            ->first();
+
+        if ($pinjaman_aktif) {
+            $sisa_pinjaman = $pinjaman_aktif->total_pinjam - $pinjaman_aktif->total_cicilan;
+            return response()->json([
+                'success' => 0,
+                'text' => 'Siswa masih memiliki pinjaman yang belum lunas.
+                           Sisa Pinjaman : <span style="color:red;">Rp. '.number_format($sisa_pinjaman, 0, ',', '.').'</span>'
+            ], 422);
         }
 
         $data_pinjaman = new Pinjaman();
