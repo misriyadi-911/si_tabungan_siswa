@@ -236,6 +236,12 @@ class SiswaController extends Controller
             'nohp_siswa' => 'required|min:10|max:12',
             'jenis_kelamin_siswa' => 'required',
             'kelas' => 'required',
+            'foto_siswa'=>'required|max:2000|mimes:jpeg,png,jpg',
+            'username' => 'required|unique:Users,username',
+            'password' => 'required',
+            'nama_orangtua' => 'required',
+            'alamat_orangtua' => 'required',
+            'nohp_orangtua' => 'required|min:10|max:12'
         ];
 
         $text = [
@@ -244,8 +250,19 @@ class SiswaController extends Controller
             'nohp_siswa.required'   => 'No HP tidak boleh kosong',
             'nohp_siswa.min' => 'No HP Minimal 10 digit',
             'nohp_siswa.max' => 'No HP Maksimal 12 digit',
-            'jenis_kelamin_siswa.required' => 'Jenis kelamin tidak boleh kosong',
+            'jenis_kelamin_siswa.required' => 'Pilih jenis kelamin terlebih dahulu',
             'kelas.required' => 'kelas tidak boleh kosong',
+            'foto_siswa.required' => 'Foto tidak boleh kosong',
+            'foto_siswa.max' => 'Ukuran tidak boleh lebih dari 2 MB',
+            'foto_siswa.mimes' => 'Format file foto harus sesuai',
+            'username.required' => 'username tidak boleh kosong',
+            'username.unique' => 'username sudah terpakai',
+            'password.required' => 'password tidak boleh kosong',
+            'nama_orangtua.required' => 'Nama wali tidak boleh kosong',
+            'alamat_orangtua.required' => 'Alamat wali tidak boleh kosong',
+            'nohp_orangtua.required' => 'No HP wali tidak boleh kosong',
+            'nohp_orangtua.min' => 'No HP Minimal 10 digit',
+            'nohp_orangtua.max' => 'No HP Maksimal 12 digit',
         ];
 
         $validasi = Validator::make($request->all(), $rules, $text);
