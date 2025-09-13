@@ -409,125 +409,144 @@ Data Siswa
 @endforeach
 	<!-- End modal Edit -->
 
-	@endsection
+@endsection
 
-	@section('script')
-	<script>
+@section('script')
+<script>
 
-		$(document).ready(function () {
-			// Ambil id_kelas dari segment URL
-			const urlSegment = window.location.pathname.split('/');
-			const id_kelas_from_url = urlSegment[2]; // /siswa/1 → index 2 = 1
+	$(document).ready(function () {
+		// Ambil id_kelas dari segment URL
+		const urlSegment = window.location.pathname.split('/');
+		const id_kelas_from_url = urlSegment[2]; // /siswa/1 → index 2 = 1
 
-			// Saat tombol tambah diklik, isi select kelas-nya
-			$('#btnTambahSiswa').on('click', function () {
-				if (id_kelas_from_url) {
-					$('#select_kelas_tambah').val(id_kelas_from_url);
-				}
-			});
+		// Saat tombol tambah diklik, isi select kelas-nya
+		$('#btnTambahSiswa').on('click', function () {
+			if (id_kelas_from_url) {
+				$('#select_kelas_tambah').val(id_kelas_from_url);
+			}
 		});
-
-		@foreach ($data_siswa as $siswa)
-			$('#modalEdit-{{$siswa->id_siswa}}').on('shown.bs.modal', function () {
-				// Ambil ID kelas dari data siswa
-				var id_kelas_siswa = "{{ $siswa->kelas->id_kelas }}";
-
-				// Set nilai select sesuai id_kelas
-				$('#select_kelas_edit-{{$siswa->id_siswa}}').val(id_kelas_siswa);
-			});
-		@endforeach
-
-
-		$(document).ready(function(){
-		// Swal.fire({
-		//   position: 'top-end',
-		//   icon: 'error',
-		//   title: 'Your work has been saved',
-		//   showConfirmButton: false,
-		//   timer: 1500
-		// })
-		$('.hapus_data').on('click', function(){
-			var id = $(this).attr('rel');
-			Swal.fire({
-				title : 'Hapus Data',
-				text : 'Apakah kamu yakin ingin menghapus data ?',
-				icon : 'warning',
-				showCancelButton : true,
-				confirmButtonColor : '#d33',
-				cancelButtonColor : '#3085d6',
-				confirmButtonText : 'Hapus'
-			}).then((result) => {
-
-				if(result.isConfirmed){
-					window.location.href = "{{ url ('/siswa/hapus') }}"+"/"+id;
-
-				}
-			})
-			console.log(id);
-		});
-
-		$('.luluskan').on('click', function(){
-			var id = $(this).attr('rel');
-			Swal.fire({
-				title : 'Luluskan Siswa',
-				text : 'Apakah kamu yakin ingin meluluskan siswa ? Siswa yang diluluskan akan terhapus dari data siswa',
-				icon : 'warning',
-				showCancelButton : true,
-				confirmButtonColor : '#d33',
-				cancelButtonColor : '#3085d6',
-				confirmButtonText : 'Luluskan'
-			}).then((result) => {
-
-				if(result.isConfirmed){
-					window.location.href = "{{ url ('/siswa/hapus') }}"+"/"+id;
-
-				}
-			})
-			console.log(id);
-		});	
 	});
 
-		$(document).on('submit', 'form', function(event) {
-			event.preventDefault();
-			$.ajax({
-				url : $(this).attr('action'),
-				type : $(this).attr('method'),
-				typeData : "JSON",
-				data : new FormData(this),
-				processData:false,
-				contentType:false,
-				success : function(res) {
-					console.log(res);
-					window.location.href = "{{ url('/siswa') }}"
-					const Toast = Swal.mixin({
-						toast : true,
-						position : 'top-end',
-						showConfirmButton : false,
-						timer : 3000,
-						timerProgressBar: true,
-						didOpen: (toast) => {
-							toast.addEventListener('mouseenter', Swal.stopTimer)
-							toast.addEventListener('mouseleave', Swal.resumeTimer)
-						}
-					})
-					Toast.fire({
-						icon : 'success',
-						title : res.text
-					})
-				},
-				error : function (xhr) {
-		 			// toastr.error(res.responseJSON.text, 'Gagal');
-		 			Swal.fire({
-		 				position: 'top-end',
-		 				icon: 'error',
-		 				title: xhr.responseJSON.text,
-		 				showConfirmButton: false,
-		 				timer: 1500
-		 			})
-		 		} 
-		 	})
-		});		
-	</script>
-	@endsection
+	@foreach ($data_siswa as $siswa)
+		$('#modalEdit-{{$siswa->id_siswa}}').on('shown.bs.modal', function () {
+			// Ambil ID kelas dari data siswa
+			var id_kelas_siswa = "{{ $siswa->kelas->id_kelas }}";
+
+			// Set nilai select sesuai id_kelas
+			$('#select_kelas_edit-{{$siswa->id_siswa}}').val(id_kelas_siswa);
+		});
+	@endforeach
+
+
+	$(document).ready(function(){
+	// Swal.fire({
+	//   position: 'top-end',
+	//   icon: 'error',
+	//   title: 'Your work has been saved',
+	//   showConfirmButton: false,
+	//   timer: 1500
+	// })
+	$('.hapus_data').on('click', function(){
+		var id = $(this).attr('rel');
+		Swal.fire({
+			title : 'Hapus Data',
+			text : 'Apakah kamu yakin ingin menghapus data ?',
+			icon : 'warning',
+			showCancelButton : true,
+			confirmButtonColor : '#d33',
+			cancelButtonColor : '#3085d6',
+			confirmButtonText : 'Hapus'
+		}).then((result) => {
+
+			if(result.isConfirmed){
+				window.location.href = "{{ url ('/siswa/hapus') }}"+"/"+id;
+
+			}
+		})
+		console.log(id);
+	});
+	
+
+	$('.luluskan').on('click', function(){
+		var id = $(this).attr('rel');
+		Swal.fire({
+			title : 'Luluskan Siswa',
+			text : 'Apakah kamu yakin ingin meluluskan siswa ? Siswa yang diluluskan akan terhapus dari data siswa',
+			icon : 'warning',
+			showCancelButton : true,
+			confirmButtonColor : '#d33',
+			cancelButtonColor : '#3085d6',
+			confirmButtonText : 'Luluskan'
+		}).then((result) => {
+
+			if(result.isConfirmed){
+				window.location.href = "{{ url ('/siswa/hapus') }}"+"/"+id;
+
+			}
+		})
+		console.log(id);
+	});	
+});
+	$(document).on('submit', 'form', function(event) {
+		event.preventDefault();
+		$.ajax({
+			url : $(this).attr('action'),
+			type : $(this).attr('method'),
+			typeData : "JSON",
+			data : new FormData(this),
+			processData:false,
+			contentType:false,
+			success : function(res) {
+				console.log(res);
+				window.location.href = "{{ url('/siswa') }}"
+				const Toast = Swal.mixin({
+					toast : true,
+					position : 'top-end',
+					showConfirmButton : false,
+					timer : 3000,
+					timerProgressBar: true,
+					didOpen: (toast) => {
+						toast.addEventListener('mouseenter', Swal.stopTimer)
+						toast.addEventListener('mouseleave', Swal.resumeTimer)
+					}
+				})
+				Toast.fire({
+					icon : 'success',
+					title : res.text
+				})
+			},
+			error : function (xhr) {
+				// toastr.error(res.responseJSON.text, 'Gagal');
+				Swal.fire({
+					position: 'top-end',
+					icon: 'error',
+					title: xhr.responseJSON.text,
+					showConfirmButton: false,
+					timer: 1500
+				})
+			} 
+		})
+	});
+	
+	// tambahan notif hasil redirect
+	@if(session('hapus_error'))
+	Swal.fire({
+		title: 'Gagal Menghapus',
+		text: "{{ session('hapus_error') }}",
+		icon: 'error',
+		confirmButtonColor: '#3085d6'
+	});
+	@endif
+
+	@if(session('hapus_sukses'))
+	Swal.fire({
+		title: 'Berhasil',
+		text: "{{ session('hapus_sukses') }}",
+		icon: 'success',
+		confirmButtonColor: '#3085d6'
+	});
+	@endif
+</script>
+@endsection
 
 

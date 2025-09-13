@@ -291,6 +291,18 @@ class SiswaController extends Controller
     public function destroy($id)
     {
         $data_siswa = Siswa::find($id);
+
+        // cek tabungan
+        $cek_tabungan = Tabungan::where('id_siswa', $id)->exists();
+        // cek pinjaman
+        $cek_pinjaman = Pinjaman::where('id_siswa', $id)->exists();
+
+        if ($cek_pinjaman) {
+            return back()->with('hapus_error', 'Siswa masih memiliki pinjaman, tidak bisa dihapus.');
+        } elseif ($cek_tabungan) {
+            return back()->with('hapus_error', 'Siswa masih memiliki tabungan, tidak bisa dihapus.');
+        }
+
         $data_siswa->delete();
         Orang_Tua::where('id_siswa','=',$id)->delete();
         Tabungan::where('id_siswa', $id)->delete();
